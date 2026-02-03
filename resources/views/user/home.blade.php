@@ -4,17 +4,27 @@
     <div class="hero">
         <div class="swiper heroSwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/1.jpg') }}" alt=""></div>
-                <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/2.jpg') }}" alt=""></div>
-                <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/3.jpg') }}" alt=""></div>
-                <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/4.jpg') }}" alt=""></div>
+
+                @foreach ($homepage->hero_images ?? [] as $slide)
+                    <div class="swiper-slide">
+                        <img src="{{ Storage::url($slide['image']) }}">
+                    </div>
+                @endforeach
+
+                {{-- fallback kalau belum ada data --}}
+                @if (empty($homepage->hero_images))
+                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/1.jpg') }}"></div>
+                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/2.jpg') }}"></div>
+                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/3.jpg') }}"></div>
+                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/4.jpg') }}"></div>
+                @endif
+
             </div>
         </div>
-
         <div class="hero-overlay">
             <div>
-                <h1>Reliable Power Solutions</h1>
-                <p>Industrial-grade genset and energy solutions</p>
+                <h1>{{ $homepage->hero_title ?? 'Reliable Power Solutions' }}</h1>
+                <p>{{ $homepage->hero_subtitle ?? 'Industrial-grade genset and energy solutions' }}</p>
             </div>
         </div>
     </div>
@@ -85,56 +95,54 @@
     <div class="trust-section" id="trust">
         <div class="row text-center">
             <div class="col-md-4 trust-box">
-                <h2 class="counter" data-target="15">0</h2>
+                <h2 class="counter" data-target="{{ $homepage->years_experience ?? 15 }}">0</h2>
                 <p>Years Experience</p>
             </div>
             <div class="col-md-4 trust-box">
-                <h2 class="counter" data-target="500">0</h2>
+                <h2 class="counter" data-target="{{ $homepage->projects_completed ?? 500 }}">0</h2>
                 <p>Projects Completed</p>
             </div>
             <div class="col-md-4 trust-box">
-                <h2 class="counter" data-target="24">0</h2>
+                <h2 class="counter" data-target="{{ $homepage->support_service ?? 24 }}">0</h2>
                 <p>Support Service</p>
             </div>
         </div>
     </div>
 
-    
+    </div>
 
 
-
-</div>
-
-
-<!-- ===== SCRIPT ===== -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-new Swiper('.heroSwiper',{
-    loop:true,
-    autoplay:{ delay:4000 }
-});
-
-const counters = document.querySelectorAll('.counter');
-let started = false;
-
-window.addEventListener('scroll', () => {
-    if (started) return;
-
-    const trust = document.getElementById('trust');
-    if (trust.getBoundingClientRect().top < window.innerHeight - 100) {
-        started = true;
-        counters.forEach(c => {
-            const t = +c.dataset.target;
-            let n = 0;
-            const step = t / 100;
-            const run = () => {
-                n += step;
-                c.innerText = n < t ? Math.ceil(n) : (t + (t == 24 ? '/7' : '+'));
-                if (n < t) requestAnimationFrame(run);
-            };
-            run();
+    <!-- ===== SCRIPT ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        new Swiper('.heroSwiper', {
+            loop: true,
+            autoplay: {
+                delay: 4000
+            }
         });
-    }
-});
-</script>
+
+        const counters = document.querySelectorAll('.counter');
+        let started = false;
+
+        window.addEventListener('scroll', () => {
+            if (started) return;
+
+            const trust = document.getElementById('trust');
+            if (trust.getBoundingClientRect().top < window.innerHeight - 100) {
+                started = true;
+                counters.forEach(c => {
+                    const t = +c.dataset.target;
+                    let n = 0;
+                    const step = t / 100;
+                    const run = () => {
+                        n += step;
+                        c.innerText = n < t ? Math.ceil(n) : (t + (t == 24 ? '/7' : '+'));
+                        if (n < t) requestAnimationFrame(run);
+                    };
+                    run();
+                });
+            }
+        });
+    </script>
 @endsection

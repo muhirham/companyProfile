@@ -14,8 +14,14 @@ class HomepageSetting extends Model
         'hero_subtitle',
         'hero_button_text',
         'hero_button_url',
-        'hero_image',
+        'hero_images',
         'highlight_title',
         'highlight_body',
+        'years_experience',
+        'projects_completed',
+        'support_service',
+    ];
+    protected $casts = [
+        'hero_images' => 'array',
     ];
 }

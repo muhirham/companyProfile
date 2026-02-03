@@ -18,12 +18,14 @@ use App\Http\Controllers\HomeController;
 Route::get('/admin', function () {
     return redirect()->route('admin.index');
 });
+Route::put('/admin/homepage', [HomepageController::class, 'update'])
+    ->name('admin.homepage.update');
+
 
 Route::get('/', function () {
     return view('user.index');
 });
 
-Route::get('/homee', function () {return view('user.home');});
 Route::get('/about', function () {return view('user.about');});
 Route::get('/blog', function () {return view('user.blog');});
 Route::get('/blog-detail', function () {return view('user.blog-detail');});
@@ -35,9 +37,16 @@ Route::get('/genset-detail', function () {return view('user.genset-detail');});
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/homee', [HomeController::class, 'index']);
+Route::delete('/admin/homepage/hero-image', [HomepageController::class, 'deleteHeroImage'])
+    ->name('admin.homepage.hero.delete');
+
+
+
 
 // GROUP ADMIN (belum pakai auth dulu)
 Route::prefix('admin')->name('admin.')->group(function () {
+    
 
     Route::get('/index', [DashboardController::class, 'index'])
         ->name('index');
