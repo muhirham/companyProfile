@@ -7,6 +7,15 @@ body{
     background:#f4f6f8;
 }
 
+/* MODAL Z-INDEX FIX */
+.modal {
+    z-index: 2000 !important;
+}
+.modal-backdrop {
+    z-index: 1990 !important;
+}
+
+
 /* =====================================================
    HEADER
 ===================================================== */

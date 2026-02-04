@@ -7,6 +7,7 @@ use App\Models\CompanyValue;
 use App\Models\VisionMission;
 use App\Models\Gallery;
 use App\Models\HomepageSetting;
+use App\Models\HomepageService;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,9 @@ class HomeController extends Controller
     {
         $homepage = HomepageSetting::orderBy('id')->first();
         $company       = CompanyProfile::first();
-        $services      = CompanyValue::orderBy('order')->get();
+        $services = HomepageService::where('is_active', true)
+        ->orderBy('order')
+        ->get();
         $visionMission = VisionMission::latest()->first();
 
         // HANYA gallery yang is_active = 1

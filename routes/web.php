@@ -38,8 +38,15 @@ Route::get('/genset-detail', function () {return view('user.genset-detail');});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/homee', [HomeController::class, 'index']);
+
 Route::delete('/admin/homepage/hero-image', [HomepageController::class, 'deleteHeroImage'])
     ->name('admin.homepage.hero.delete');
+    
+Route::get('/admin/homepage/services',[HomepageController::class, 'services'])
+    ->name('admin.homepage.services');
+
+Route::put('/admin/homepage/services',[HomepageController::class, 'updateServices'])
+    ->name('admin.homepage.services.update');
 
 
 

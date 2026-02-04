@@ -13,10 +13,6 @@
 
                 {{-- fallback kalau belum ada data --}}
                 @if (empty($homepage->hero_images))
-                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/1.jpg') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/2.jpg') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/3.jpg') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('genset-website/imgGenset/4.jpg') }}"></div>
                 @endif
 
             </div>
@@ -32,36 +28,18 @@
     <!-- ===== SERVICES ===== -->
     <div class="section">
         <div class="row g-4">
-            <div class="col-md-3">
-                <div class="service-card">
-                    <div class="service-icon">⚡</div>
-                    <h6>Genset</h6>
-                    <p>Industrial power</p>
+            @foreach ($services as $service)
+                <div class="col-md-3">
+                    <div class="service-card">
+                        <div class="service-icon">{{ $service->icon }}</div>
+                        <h6>{{ $service->title }}</h6>
+                        <p>{{ $service->subtitle }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="service-card">
-                    <div class="service-icon">💡</div>
-                    <h6>Lighting Tower</h6>
-                    <p>Project lighting</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="service-card">
-                    <div class="service-icon">🛠</div>
-                    <h6>Maintenance</h6>
-                    <p>Professional service</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="service-card">
-                    <div class="service-icon">📦</div>
-                    <h6>Spare Parts</h6>
-                    <p>Original parts</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
+
 
     <!-- ===== VISI & MISI ===== -->
     <div class="section visi-misi">
