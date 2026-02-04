@@ -42,32 +42,27 @@
 
 
     <!-- ===== VISI & MISI ===== -->
-    <div class="section visi-misi">
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="vm-box">
-                    <h3>Visi</h3>
-                    <p>
-                        Menjadi perusahaan penyedia solusi energi dan genset
-                        terpercaya di Indonesia dengan mengutamakan kualitas,
-                        keandalan, dan kepuasan pelanggan.
-                    </p>
+    @if ($visionMission)
+        <div class="section visi-misi">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="vm-box">
+                        <h3>Visi</h3>
+                        {!! $visionMission->vision ?? '-' !!}
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6 mb-4">
-                <div class="vm-box">
-                    <h3>Misi</h3>
-                    <ul>
-                        <li>Menyediakan produk genset berkualitas tinggi.</li>
-                        <li>Memberikan layanan service dan maintenance profesional.</li>
-                        <li>Mengutamakan keselamatan dan efisiensi kerja.</li>
-                        <li>Membangun hubungan jangka panjang dengan pelanggan.</li>
-                    </ul>
+                <div class="col-md-6 mb-4">
+                    <div class="vm-box">
+                        <h3>Misi</h3>
+                        {!! $visionMission->mission ?? '-' !!}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        <p>Visi misi belum di buat</p>
+    @endif
 
     <!-- ===== TRUST ===== -->
     <div class="trust-section" id="trust">
