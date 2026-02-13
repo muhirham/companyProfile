@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Controllers\Controller;
 use App\Models\CompanyProfile;
-use App\Models\CompanyValue;
 use App\Models\VisionMission;
 use App\Models\Gallery;
 use App\Models\HomepageSetting;
@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\ContactMessage;
 use App\Models\Service;
+use App\Models\Brand;
+
 
 
 
@@ -68,6 +70,11 @@ class HomeController extends Controller
         return view('user.blog-detail', compact('post'));
     }
 
+    public function contact()
+    {
+        return view('user.contact');
+    }
+
     public function contactStore(Request $request)
     {
         $request->validate([
@@ -104,6 +111,23 @@ class HomeController extends Controller
 
         return view('user.service-detail', compact('service'));
     }
+
+    public function genset()
+{
+    $brands = Brand::where('is_active', true)->get();
+    return view('user.genset', compact('brands'));
+}
+
+public function gensetDetail($slug)
+{
+    $brand = Brand::where('slug', $slug)
+        ->with('specs')
+        ->firstOrFail();
+
+    return view('user.genset-detail', compact('brand'));
+}
+
+
 
 
 }

@@ -11,6 +11,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
@@ -36,31 +37,90 @@
         </div>
 
         <!-- ===== NAV ===== -->
-        <div class="nav-wrapper">
-            <div class="main-nav">
-                <a href="/homee" class="active">Home</a>
-                <a href="/about">About Us</a>
-                <a href="/genset">Genset</a>
-                <a href="/service">Service</a>
-                <a href="/blog">Blog</a>
-                <a href="/contact">Contact</a>
+        <nav class="navbar navbar-expand-lg nav-wrapper">
+            <div class="container-fluid">
+
+                <!-- TOGGLER -->
+                <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar">
+                    ☰
+                </button>
+
+                <!-- MENU -->
+                <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+                    <ul class="navbar-nav gap-lg-4 text-center">
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
+                                href="{{ route('home') }}">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
+                                href="{{ route('about') }}">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('user.genset*') ? 'active' : '' }}"
+                                href="{{ route('user.genset') }}">
+                                Genset
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('service*') ? 'active' : '' }}"
+                                href="{{ route('service') }}">
+                                Service
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('blog*') ? 'active' : '' }}"
+                                href="{{ route('blog') }}">
+                                Blog
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
+                                href="{{ route('contact') }}">
+                                Contact
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </div>
             </div>
-        </div>
+        </nav>
+
 
         @yield('content')
 
 
         <!-- ===== BRANDS ===== -->
         <div class="brands text-center mt-5">
-            <div class="fw-bold mb-3">Powered by</div>
-            <img src="{{ asset('genset-website/img/brand/perkins.png') }}" alt="Perkins">
-            <img src="{{ asset('genset-website/img/brand/kubota.png') }}" alt="Kubota">
-            <img src="{{ asset('genset-website/img/brand/mitsubishi.png') }}" alt="Mitsubishi">
-            <img src="{{ asset('genset-website/img/brand/mtu.png') }}" alt="MTU">
-            <img src="{{ asset('genset-website/img/brand/himoinsa.png') }}" alt="Himoinsa">
-            <img src="{{ asset('genset-website/img/brand/doosan.png') }}" alt="Doosan">
-            <img src="{{ asset('genset-website/img/brand/yanmar.png') }}" alt="Yanmar">
+            <div class="fw-bold mb-4">Powered by</div>
+
+            <div class="brand-footer-wrapper">
+                @foreach ($footerBrands as $brand)
+                    @php
+                        $logo = $brand->logo
+                            ? asset('storage/' . $brand->logo)
+                            : asset('genset-website/img/brand/' . $brand->slug . '.png');
+                    @endphp
+
+                    <a href="{{ route('user.genset.detail', $brand->slug) }}" class="brand-footer-item">
+                        <img src="{{ $logo }}" alt="{{ $brand->name }}">
+                    </a>
+                @endforeach
+            </div>
         </div>
+
 
         <!-- ===== WHATSAPP FLOAT ===== -->
         <a href="https://wa.me/6281234567890?text=Halo%20saya%20ingin%20tanya%20tentang%20produk" class="wa-float"
@@ -70,3 +130,7 @@
 
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
         </a>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>

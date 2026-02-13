@@ -11,16 +11,11 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\GensetController;
 use App\Http\Controllers\HomeController;
 
 
 
-
-Route::get('/admin', function () {
-    return redirect()->route('admin.index');
-});
-Route::put('/admin/homepage', [HomepageController::class, 'update'])
-    ->name('admin.homepage.update');
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
@@ -30,32 +25,29 @@ Route::get('/blog', [HomeController::class, 'blog'])
 Route::get('/blog/{post:slug}', [HomeController::class, 'blogDetail'])
     ->name('blog-detail');
 
-Route::post('/contact', [HomeController::class, 'contactStore'])->name('contact.store');
+Route::get('/contact', [HomeController::class, 'contact'])
+    ->name('contact');
+
+Route::post('/contact', [HomeController::class, 'contactStore'])
+    ->name('contact.store');
+
 
 Route::get('/service', [HomeController::class, 'service'])
     ->name('service');
 
 Route::get('/service/{slug}', [HomeController::class, 'serviceDetail'])
     ->name('service.detail');
-    
 
 
-
-Route::get('/genset', function () {return view('user.genset');});
-Route::get('/genset-detail', function () {return view('user.genset-detail');});
+Route::get('/genset', [HomeController::class, 'genset'])
+    ->name('user.genset');
+Route::get('/genset/{slug}', [HomeController::class, 'gensetDetail'])
+    ->name('user.genset.detail');
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/homee', [HomeController::class, 'index']);
 
-Route::delete('/admin/homepage/hero-image', [HomepageController::class, 'deleteHeroImage'])
-    ->name('admin.homepage.hero.delete');
-    
-Route::get('/admin/homepage/services',[HomepageController::class, 'services'])
-    ->name('admin.homepage.services');
 
-Route::put('/admin/homepage/services',[HomepageController::class, 'updateServices'])
-    ->name('admin.homepage.services.update');
 
 // GROUP ADMIN (belum pakai auth dulu)
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -84,6 +76,37 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::put('/service/{id}', [ServiceController::class, 'update'])
         ->name('service.update');
+
+     Route::get('/genset', [GensetController::class, 'index'])
+        ->name('genset.index');
+
+    Route::post('/genset/brand', [GensetController::class, 'storeBrand'])
+        ->name('genset.storeBrand');
+
+    Route::put('/genset/brand/{id}', [GensetController::class, 'updateBrand'])
+        ->name('genset.updateBrand');
+
+    Route::post('/genset/spec', [GensetController::class, 'storeSpec'])
+        ->name('genset.storeSpec');
+
+    Route::put('/genset/spec/{id}', [GensetController::class, 'updateSpec'])
+        ->name('genset.updateSpec');
+
+    Route::delete('/genset/spec/{id}', [GensetController::class, 'deleteSpec'])
+        ->name('genset.deleteSpec');
+
+    Route::put('/homepage', [HomepageController::class, 'update'])
+        ->name('homepage.update');
+
+    Route::delete('/homepage/hero-image', [HomepageController::class, 'deleteHeroImage'])
+        ->name('hero.delete');
+    
+    Route::get('/homepage/services',[HomepageController::class, 'services'])
+        ->name('homepage.services');
+
+    Route::put('/homepage/services',[HomepageController::class, 'updateServices'])
+    ->name('homepage.services.update');
+
 
 
         
