@@ -35,8 +35,7 @@
                 <div class="col-md-4">
                     <div class="blog-card">
                         <div class="blog-thumb">
-                            <img src="{{ $post->image_path ? asset('storage/' . $post->image_path) : asset('compe/imgExample/images.png') }}"
-                                alt="{{ $post->title }}">
+                            <img src="{{ $post->image_url }}"alt="{{ $post->title }}">
                         </div>
 
                         <div class="blog-body">

@@ -333,11 +333,6 @@
             </a>
             </li>
 
-            <li class="{{ request()->routeIs('admin.genset.*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.genset.index') }}">
-                <i class="fas fa-truck-monster"></i> <span>Genset</span>
-            </a>
-            </li> 
         </ul>
 
 

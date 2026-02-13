@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\GensetController;
 use App\Http\Controllers\HomeController;
 
 
@@ -77,29 +76,30 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/service/{id}', [ServiceController::class, 'update'])
         ->name('service.update');
 
-     Route::get('/genset', [GensetController::class, 'index'])
+     Route::get('/genset', [ProductController::class, 'index'])
         ->name('genset.index');
 
-    Route::post('/genset/brand', [GensetController::class, 'storeBrand'])
+    Route::post('/genset/brand', [ProductController::class, 'storeBrand'])
         ->name('genset.storeBrand');
 
-    Route::put('/genset/brand/{id}', [GensetController::class, 'updateBrand'])
+    Route::put('/genset/brand/{id}', [ProductController::class, 'updateBrand'])
         ->name('genset.updateBrand');
 
-    Route::post('/genset/spec', [GensetController::class, 'storeSpec'])
+    Route::post('/genset/spec', [ProductController::class, 'storeSpec'])
         ->name('genset.storeSpec');
 
-    Route::put('/genset/spec/{id}', [GensetController::class, 'updateSpec'])
+    Route::put('/genset/spec/{id}', [ProductController::class, 'updateSpec'])
         ->name('genset.updateSpec');
 
-    Route::delete('/genset/spec/{id}', [GensetController::class, 'deleteSpec'])
+    Route::delete('/genset/spec/{id}', [ProductController::class, 'deleteSpec'])
         ->name('genset.deleteSpec');
 
-    Route::put('/homepage', [HomepageController::class, 'update'])
+    Route::put('/admin/homepage', [HomepageController::class, 'update'])
         ->name('homepage.update');
 
+
     Route::delete('/homepage/hero-image', [HomepageController::class, 'deleteHeroImage'])
-        ->name('hero.delete');
+        ->name('homepage.hero.delete');
     
     Route::get('/homepage/services',[HomepageController::class, 'services'])
         ->name('homepage.services');
