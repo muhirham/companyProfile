@@ -5,17 +5,29 @@
         <div class="swiper heroSwiper">
             <div class="swiper-wrapper">
 
-                @foreach ($homepage->hero_images ?? [] as $slide)
-                    <div class="swiper-slide">
-                        <img src="{{ Storage::url($slide['image']) }}">
-                    </div>
-                @endforeach
+                @php
+                    $heroImages = $homepage->hero_images ?? [];
+                @endphp
 
-                {{-- fallback kalau belum ada data --}}
-                @if (empty($homepage->hero_images))
+                @if (!empty($heroImages))
+                    @foreach ($heroImages as $slide)
+                        <div class="swiper-slide">
+                            <img src="{{ Storage::url($slide['image']) }}"
+                                style="width:100%; height:500px; object-fit:cover;">
+                        </div>
+                    @endforeach
+                @else
+                    @for ($i = 1; $i <= 4; $i++)
+                        <div class="swiper-slide">
+                            <img src="{{ asset('genset-website/imgGenset/' . $i . '.jpg') }}"
+                                style="width:100%; height:500px; object-fit:cover;">
+                        </div>
+                    @endfor
                 @endif
 
+
             </div>
+
         </div>
         <div class="hero-overlay">
             <div>
