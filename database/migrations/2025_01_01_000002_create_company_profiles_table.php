@@ -9,30 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('company_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->string('company_name')->nullable();       // Nama perusahaan
-            $table->string('tagline')->nullable();            // “Find Out More About Us” / slogan singkat
+        $table->id();
 
-            $table->text('short_description')->nullable();    // paragraf pendek (yang miring / italic)
-            $table->longText('description')->nullable();      // deskripsi panjang (paragraf bawah)
+        // ABOUT PAGE (USER)
+        $table->longText('description')->nullable(); // isi HTML summernote
+        $table->string('about_image')->nullable();   // gambar kiri
 
-            $table->string('about_image')->nullable();        // gambar di sebelah kiri (ganti about.jpg)
+        $table->timestamps();
+    });
 
-            // Contact info
-            $table->text('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->string('website')->nullable();
-
-            // Sosial media (buat header/footer)
-            $table->string('facebook_url')->nullable();
-            $table->string('instagram_url')->nullable();
-            $table->string('linkedin_url')->nullable();
-            $table->string('youtube_url')->nullable();
-
-            $table->text('map_embed_url')->nullable();        // buat section Contact / footer map
-            $table->timestamps();
-        });
     }
 
     public function down(): void

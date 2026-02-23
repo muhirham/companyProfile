@@ -1,40 +1,49 @@
 @extends('layouts.userLayouts')
-@section('content')
-    <!-- ===== ABOUT CONTENT ===== -->
-    <div class="page-section">
+<style>
+    /* ===== ABOUT ===== */
+.about-image-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        <div class="row">
-            <div class="col-md-5">
-                <img src="{{ asset('genset-website/imgGenset/4.jpg') }}" class="about-img" alt="About Bach Multi Global">
+.about-img {
+    width: 100%;
+    max-width: 420px;   /* kontrol BESAR gambar */
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+</style>
+
+@section('content')
+    <div class="page-section">
+        <div class="row align-items-center">
+
+            {{-- IMAGE --}}
+            <div class="col-md-5 mb-4 mb-md-0 text-center">
+                <div class="about-image-wrap">
+                    @if ($profile && $profile->about_image)
+                        <img src="{{ asset('storage/' . $profile->about_image) }}" class="about-img" alt="About Us">
+                    @else
+                        <img src="{{ asset('genset-website/imgGenset/4.jpg') }}" class="about-img" alt="About Us">
+                    @endif
+                </div>
             </div>
 
+            {{-- CONTENT --}}
             <div class="col-md-7">
                 <h2>About Us</h2>
 
-                <p>
-                    Berdiri sejak tahun 2006, <strong>PT. BACH MULTI GLOBAL</strong> merupakan
-                    perusahaan penyedia mesin pembangkit listrik berbahan bakar diesel
-                    (<em>Diesel Genset</em>) dengan kapasitas daya mulai dari
-                    <strong>5 kVA hingga 3000 kVA</strong>.
-                </p>
-
-                <p>
-                    Perusahaan kami juga merupakan agen tunggal produk
-                    <strong>HIMOINSA (Spain)</strong> yang dikenal sebagai salah satu
-                    produsen genset terbesar di Eropa.
-                </p>
-
-                <p>
-                    Dengan dukungan lebih dari <strong>300 karyawan profesional</strong>,
-                    kami telah berhasil menjual serta melakukan pemasangan
-                    <strong>lebih dari 2.000 unit genset</strong> di seluruh Indonesia.
-                </p>
-
-                <p>
-                    Team teknis kami tersebar di seluruh wilayah Indonesia dan
-                    siap memberikan bantuan teknis secara cepat dan tepat
-                    dimanapun anda berada.
-                </p>
+                @if ($profile)
+                    {!! $profile->description !!}
+                @else
+                    <p>Konten belum tersedia.</p>
+                @endif
             </div>
+
         </div>
+    </div>
 @endsection

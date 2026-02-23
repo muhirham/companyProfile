@@ -29,7 +29,6 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
                 <div class="card-body">
                     @if ($homepage)
@@ -61,7 +60,26 @@
                         <p>Belum ada data homepage.</p>
                     @endif
                 </div>
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4>Service Homepage</h4>
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editServices">
+                            Edit
+                        </button>
+                    </div>
 
+                    <div class="card-body">
+                        <div class="row text-center">
+                            @foreach ($services as $service)
+                                <div class="col-md-3">
+                                    <div class="service-icon fs-3">{{ $service->icon }}</div>
+                                    <strong>{{ $service->title }}</strong>
+                                    <p class="text-muted">{{ $service->subtitle }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
                 @if (!empty($homepage->hero_images))
                     <div class="card mt-4">
                         <div class="card-header">
@@ -92,12 +110,11 @@
                         </div>
                     </div>
                 @endif
-
             </div>
         </div>
     </div>
-    </div>
-    </div>
+    @endsection
+
     <div class="modal fade" id="editHomepage" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <form action="{{ route('admin.homepage.update') }}" method="POST" enctype="multipart/form-data">
@@ -163,6 +180,7 @@
             </form>
         </div>
     </div>
+
     <div class="modal fade" id="deleteHeroModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <form action="{{ route('admin.homepage.hero.delete') }}" method="POST">
@@ -198,6 +216,56 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" id="editServices" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <form action="{{ route('admin.homepage.services.update') }}" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Edit Service Homepage</h5>
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        @foreach ($services as $service)
+                            <div class="col-md-6 mb-3">
+                                <div class="border p-3 rounded">
+                                    <input type="text"
+                                        name="services[{{ $service->id }}][icon]"
+                                        class="form-control mb-2"
+                                        placeholder="Icon"
+                                        value="{{ $service->icon }}">
+
+                                    <input type="text"
+                                        name="services[{{ $service->id }}][title]"
+                                        class="form-control mb-2"
+                                        placeholder="Judul"
+                                        value="{{ $service->title }}">
+
+                                    <input type="text"
+                                        name="services[{{ $service->id }}][subtitle]"
+                                        class="form-control"
+                                        placeholder="Subtitle"
+                                        value="{{ $service->subtitle }}">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-success">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 
     @push('scripts')
         <script>
@@ -235,4 +303,3 @@
         </script>
     @endpush
 
-@endsection

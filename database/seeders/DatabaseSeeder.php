@@ -14,12 +14,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             \Database\Seeders\HomepageSettingSeeder::class,
+            \Database\Seeders\HomepageServiceSeeder::class,
             \Database\Seeders\CompanyProfileSeeder::class,
             \Database\Seeders\CompanyValueSeeder::class,
             \Database\Seeders\VisionMissionSeeder::class,
             \Database\Seeders\ProductSeeder::class,
             \Database\Seeders\PostSeeder::class,
             \Database\Seeders\ContactMessageSeeder::class,
+            \Database\Seeders\ServiceSeeder::class,
+            \Database\Seeders\GensetSeeder::class,
+            
         ]);
     }
 }

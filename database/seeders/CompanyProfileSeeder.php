@@ -10,20 +10,26 @@ class CompanyProfileSeeder extends Seeder
     public function run(): void
     {
         CompanyProfile::firstOrCreate([], [
-            'company_name'      => 'PT Contoh Genset Indonesia',
-            'tagline'           => 'Solusi Kelistrikan Andal untuk Industri dan Event Anda',
-            'short_description' => 'PT Contoh Genset Indonesia adalah perusahaan yang fokus pada penyediaan solusi kelistrikan melalui penjualan dan penyewaan genset untuk berbagai kebutuhan industri, komersial, maupun event.',
-            'description'       => 'PT Contoh Genset Indonesia merupakan perusahaan yang bergerak di bidang penyediaan solusi kelistrikan terpadu. Kami melayani kebutuhan genset untuk pabrik, gedung perkantoran, pusat perbelanjaan, rumah sakit, hingga event skala kecil maupun besar. Dengan dukungan tim teknisi berpengalaman dan armada unit yang terawat, kami berkomitmen memberikan layanan yang responsif, aman, dan terpercaya kepada seluruh pelanggan.',
-            'about_image'       => null, // nanti diisi lewat upload
-            'address'           => 'Jl. Contoh Raya No. 123, Jakarta Selatan',
-            'phone'             => '021-1234567',
-            'email'             => 'info@contohgenset.co.id',
-            'website'           => 'https://www.contohgenset.co.id',
-            'facebook_url'      => 'https://facebook.com/contohgenset',
-            'instagram_url'     => 'https://instagram.com/contohgenset',
-            'linkedin_url'      => 'https://linkedin.com/company/contohgenset',
-            'youtube_url'       => 'https://youtube.com/@contohgenset',
-            'map_embed_url'     => null,
+            'description' => '
+                <p>
+                    Berdiri sejak tahun 2006, <strong>PT. BACH MULTI GLOBAL</strong> merupakan
+                    perusahaan penyedia mesin pembangkit listrik berbahan bakar diesel
+                    (<em>Diesel Genset</em>) dengan kapasitas daya mulai dari
+                    <strong>5 kVA hingga 3000 kVA</strong>.
+                </p>
+
+                <p>
+                    Perusahaan kami juga merupakan agen tunggal produk
+                    <strong>HIMOINSA (Spain)</strong> yang dikenal sebagai salah satu
+                    produsen genset terbesar di Eropa.
+                </p>
+
+                <p>
+                    Dengan dukungan tenaga profesional, kami telah berhasil menangani
+                    berbagai kebutuhan genset industri di seluruh Indonesia.
+                </p>
+            ',
+            'about_image' => null, // default dulu
         ]);
     }
 }

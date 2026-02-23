@@ -26,18 +26,6 @@ class HomepageSettingSeeder extends Seeder
                         'id'    => 'slide_1',
                         'image' => 'hero/slide1.jpg',
                     ],
-                    [
-                        'id'    => 'slide_2',
-                        'image' => 'hero/slide2.jpg',
-                    ],
-                    [
-                        'id'    => 'slide_3',
-                        'image' => 'hero/slide3.jpg',
-                    ],
-                    [
-                        'id'    => 'slide_4',
-                        'image' => 'hero/slide4.jpg',
-                    ],
                 ],
 
                 // OPTIONAL HIGHLIGHT

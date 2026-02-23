@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="{{asset('admin/dist/assets/css/style.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/dist/assets/css/components.css')}}">
 <link rel="stylesheet" href="{{ asset('admin/dist/assets/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -325,6 +327,12 @@
             </a>
             </li>
 
+            <li class="{{ request()->routeIs('admin.service.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.service.index') }}">
+                <i class="fas fa-cogs"></i> <span>Layanan</span>
+            </a>
+            </li>
+
         </ul>
 
 
@@ -351,6 +359,8 @@
       </footer>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- General JS Scripts -->
   <script src="{{asset('admin/dist/assets/modules/jquery.min.js')}}"></script>
@@ -379,10 +389,14 @@
 
   <!-- Page Specific JS File -->
   <script src="{{asset('admin/dist/assets/js/page/modules-datatables.js')}}"></script>
+
+  <!-- CKEditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   
   <!-- Template JS File -->
   <script src="{{asset('admin/dist/assets/js/scripts.js')}}"></script>
   <script src="{{asset('admin/dist/assets/js/custom.js')}}"></script>
+  
 
   @stack('scripts')
 </body>

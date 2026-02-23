@@ -1,37 +1,36 @@
 @extends('layouts.userLayouts')
+
 @section('content')
-    <!-- ===== PAGE CONTENT ===== -->
-    <div class="page-section">
-        <h4 class="mb-4 text-primary">Service</h4>
+    <div class="container mt-5 mb-5">
+        <h2 class="mb-4">Service</h2>
 
-        <div class="row g-4">
+        <div class="row">
 
-            <div class="col-md-4">
-                <a href="service-detail.html?type=installation" class="service-link">
-                    <div class="service-card">
-                        <img src="{{ asset('genset-website/imgGenset/1.jpg') }}" alt="">
-                        <div class="service-label">INSTALLATION</div>
+            @foreach ($services as $service)
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-0">
+
+                        <img src="{{ $service->image_url }}" class="card-img-top" style="height:250px; object-fit:cover;">
+
+
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                {{ $service->name }}
+                            </h5>
+
+                            <p class="text-muted small">
+                                {{ $service->short_description }}
+                            </p>
+
+                            <a href="{{ route('service.detail', $service->slug) }}" class="btn btn-dark w-100 mt-3">
+                                View Detail
+                            </a>
+
+                        </div>
+
                     </div>
-                </a>
-            </div>
-
-            <div class="col-md-4">
-                <a href="service-detail.html?type=maintenance" class="service-link">
-                    <div class="service-card">
-                        <img src="{{ asset('genset-website/imgGenset/2.jpg') }}" alt="">
-                        <div class="service-label">MAINTENANCE</div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-4">
-                <a href="service-detail.html?type=rental" class="service-link">
-                    <div class="service-card">
-                        <img src="{{ asset('genset-website/imgGenset/3.jpg') }}" alt="">
-                        <div class="service-label">RENTAL</div>
-                    </div>
-                </a>
-            </div>
+                </div>
+            @endforeach
 
         </div>
     </div>

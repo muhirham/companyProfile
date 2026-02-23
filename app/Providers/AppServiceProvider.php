@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Brand;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+            view()->composer('layouts.userLayouts', function ($view) {
+        $footerBrands = Brand::where('is_active', 1)->get();
+        $view->with('footerBrands', $footerBrands);
+    });
     }
 }

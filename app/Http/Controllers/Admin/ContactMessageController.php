@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
+use Illuminate\Http\Request;
+
 
 class ContactMessageController extends Controller
 {
@@ -16,4 +18,21 @@ class ContactMessageController extends Controller
             'messages' => $messages,
         ]);
     }
+
+    public function markRead($id)
+    {
+        ContactMessage::where('id', $id)->update([
+            'is_read' => true
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+        public function destroy($id)
+    {
+        ContactMessage::findOrFail($id)->delete();
+        return response()->json(['success' => true]);
+    }
+
+
 }

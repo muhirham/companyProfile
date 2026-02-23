@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\HomepageSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\HomepageService;
 
 
 class HomepageController extends Controller
@@ -13,10 +14,12 @@ class HomepageController extends Controller
     public function index()
     {
         $homepage = HomepageSetting::first();
+        $services = HomepageService::all();
 
         return view('admin.homepage.index', [
             'title'    => 'Homepage',
             'homepage' => $homepage,
+            'services' => HomepageService::where('is_active', true)->get(),
         ]);
     }
 
@@ -67,28 +70,53 @@ class HomepageController extends Controller
         return back()->with('success', 'Homepage updated');
     }
 
-public function deleteHeroImage(Request $request)
-{
-    $homepage = HomepageSetting::first();
+    public function deleteHeroImage(Request $request)
+    {
+        $homepage = HomepageSetting::first();
 
-    $images = collect($homepage->hero_images);
+        $images = collect($homepage->hero_images);
 
-    $target = $images->firstWhere('id', $request->image_id);
+        $target = $images->firstWhere('id', $request->image_id);
 
-    // hapus file fisik
-    if ($target && Storage::disk('public')->exists($target['image'])) {
-        Storage::disk('public')->delete($target['image']);
+        // hapus file fisik
+        if ($target && Storage::disk('public')->exists($target['image'])) {
+            Storage::disk('public')->delete($target['image']);
+        }
+
+        // hapus dari array
+        $images = $images
+            ->reject(fn ($img) => $img['id'] === $request->image_id)
+            ->values()
+            ->toArray();
+
+        $homepage->update(['hero_images' => $images]);
+
+        return back()->with('success', 'Gambar berhasil dihapus');
     }
 
-    // hapus dari array
-    $images = $images
-        ->reject(fn ($img) => $img['id'] === $request->image_id)
-        ->values()
-        ->toArray();
 
-    $homepage->update(['hero_images' => $images]);
+    /*    * Display a listing of the homepage services.
+     */
 
-    return back()->with('success', 'Gambar berhasil dihapus');
-}
+    public function updateServices(Request $request)
+    {
+        $data = $request->validate([
+            'services' => 'required|array',
+            'services.*.title' => 'required|string',
+            'services.*.subtitle' => 'nullable|string',
+            'services.*.icon' => 'nullable|string',
+        ]);
+
+        foreach ($data['services'] as $id => $service) {
+            HomepageService::where('id', $id)->update([
+                'title' => $service['title'],
+                'subtitle' => $service['subtitle'] ?? null,
+                'icon' => $service['icon'] ?? null,
+            ]);
+        }
+
+        return back()->with('success', 'Service homepage berhasil diupdate');
+    }
+
 
 }
