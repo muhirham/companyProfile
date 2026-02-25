@@ -25,7 +25,6 @@
                     @endfor
                 @endif
 
-
             </div>
 
         </div>
