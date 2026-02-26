@@ -190,6 +190,7 @@ class ProductController extends Controller
     }
 
     // ================= DELETE BRAND =================
+
     public function deleteBrand($id)
     {
         $brand = Brand::findOrFail($id);
