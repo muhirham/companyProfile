@@ -162,7 +162,7 @@
 
                                 <div class="mb-3">
                                     <label>Notes</label>
-                                    <textarea name="Notes" class="form-control"></textarea>
+                                    <textarea name="note" class="form-control"></textarea>
                                 </div>
 
                             </div>
@@ -304,4 +304,24 @@
             }
         }
     </script>
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // Tutup modal kalau masih terbuka
+                let modal = bootstrap.Modal.getInstance(document.getElementById('inquiryModal'));
+                if (modal) {
+                    modal.hide();
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+@endif
 @endsection

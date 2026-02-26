@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GensetInquiry;
 use App\Models\WebsiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,8 +12,11 @@ class WebsiteSettingController extends Controller
 {
     public function index()
     {
+        $inquiries = GensetInquiry::with('spec.brand')
+                    ->latest()
+                    ->get();
         $settings = WebsiteSetting::first();
-        return view('admin.settings.index', compact('settings'));
+        return view('admin.settings.index', compact('inquiries','settings'));
     }
 
     public function update(Request $request)
@@ -21,6 +25,7 @@ class WebsiteSettingController extends Controller
             'whatsapp_number' => 'nullable|string|max:30',
             'address' => 'nullable|string',
             'map_zoom' => 'nullable|integer|min:10|max:20',
+            'wa_template' => 'nullable|string',
         ]);
 
         $settings = WebsiteSetting::first();
@@ -29,6 +34,7 @@ class WebsiteSettingController extends Controller
             'whatsapp_number' => $request->whatsapp_number,
             'address' => $request->address,
             'map_zoom' => $request->map_zoom ?? 17,
+            'wa_template' => $request->wa_template,
         ];
 
         // 🔥 AUTO GENERATE EMBED LINK

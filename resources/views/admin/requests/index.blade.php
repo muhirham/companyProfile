@@ -155,7 +155,7 @@
         });
     </script>
 
-        <script>
+    <script>
         function viewDetail(id) {
 
             fetch(`/admin/requests/${id}`)
@@ -183,33 +183,80 @@
                         $('#modalImage').hide();
                     }
 
-                    const cleanPhone = (q.phone || '').replace(/[^0-9]/g, '');
+                    // =========================
+                    // FORMAT NOMOR WA
+                    // =========================
+                    let cleanPhone = (q.phone || '').replace(/[^0-9]/g, '');
 
-                    const message =
-            `Hello ${q.name},
+                    if (cleanPhone.startsWith('0')) {
+                        cleanPhone = '62' + cleanPhone.substring(1);
+                    }
 
-            Thank you for your inquiry regarding:
-            ${q.brand ?? ''} ${q.model ?? ''}
+                    // =========================
+                    // AMBIL TEMPLATE DARI CRUD
+                    // =========================
+                    let template = @json(optional($settings)->wa_template);
 
-            Note:
-            ${q.note ?? '-'}
+                    if (!template) {
+                        alert('WA Template belum diatur di Website Settings!');
+                        return;
+                    }
 
-            We will assist you shortly.`;
+                    // =========================
+                    // REPLACE PLACEHOLDER
+                    // =========================
+                    let message = template
+                        .replaceAll('{name}', q.name ?? '')
+                        .replaceAll('{brand}', q.brand ?? '')
+                        .replaceAll('{model}', q.model ?? '')
+                        .replaceAll('{note}', q.note ?? '-');
+
+                    // =========================
+                    // CONVERT HTML → FORMAT WA
+                    // =========================
+
+                    // Bold
+                    message = message.replace(/<strong>(.*?)<\/strong>/gi, '*$1*');
+                    message = message.replace(/<b>(.*?)<\/b>/gi, '*$1*');
+
+                    // Italic
+                    message = message.replace(/<em>(.*?)<\/em>/gi, '_$1_');
+                    message = message.replace(/<i>(.*?)<\/i>/gi, '_$1_');
+
+                    // List
+                    message = message.replace(/<li>(.*?)<\/li>/gi, '• $1\n');
+
+                    // Paragraf
+                    message = message.replace(/<\/p>/gi, '\n\n');
+
+                    // Line break
+                    message = message.replace(/<br\s*\/?>/gi, '\n');
+
+                    // Hapus semua tag HTML
+                    message = message.replace(/<[^>]+>/g, '');
+
+                    // Hapus &nbsp;
+                    message = message.replace(/&nbsp;/gi, ' ');
+
+                    // Hapus spasi berlebihan di awal baris
+                    message = message.replace(/^[ \t]+/gm, '');
+
+                    // Rapikan banyak newline
+                    message = message.replace(/\n{3,}/g, '\n\n').trim();
 
                     const encodedMessage = encodeURIComponent(message);
+
                     const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
 
                     $('#waButton').attr('href', waUrl);
 
-                    // BOOTSTRAP 4 SHOW
                     $('#detailModal').modal('show');
-
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
-        </script>
+</script>
 
     <script>
         function deleteInquiry(id) {

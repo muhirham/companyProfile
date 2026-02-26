@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GensetInquiry;
+use App\Models\WebsiteSetting;
 
 
 class GensetInquiryController extends Controller
@@ -18,8 +19,9 @@ class GensetInquiryController extends Controller
         $inquiries = GensetInquiry::with('spec.brand')
                         ->latest()
                         ->get();
+        $settings = WebsiteSetting::first();
 
-        return view('admin.requests.index', compact('inquiries'));
+        return view('admin.requests.index', compact('inquiries','settings'));
     }
 
     /*

@@ -12,7 +12,8 @@ class WebsiteSetting extends Model
         'whatsapp_number',
         'address',
         'map_zoom',
-        'map_embed_url'
+        'map_embed_url',
+        'wa_template'
     ];
 
     public function getLogoUrlAttribute()

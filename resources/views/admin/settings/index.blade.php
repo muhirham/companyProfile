@@ -24,9 +24,10 @@
                             <label class="font-weight-bold">Logo</label><br>
 
                             @if($settings->logo_url)
-                                <img src="{{ $settings->logo_url }}"
-                                     class="img-fluid mb-3"
-                                     style="max-height:120px;">
+                                <div class="mb-3">
+                                    <img src="{{ $settings->logo_url }}"
+                                        style="max-height:80px; width:auto; object-fit:contain;">
+                                </div>
                             @endif
 
                             <input type="file" name="logo" class="form-control">
@@ -39,6 +40,20 @@
                                    name="whatsapp_number"
                                    class="form-control"
                                    value="{{ $settings->whatsapp_number }}">
+                        </div>
+
+                        <!-- Tamplate Pesan WHATSAPP -->
+                        <div class="mb-3">
+                            <label>WhatsApp Message Template</label>
+                            <textarea
+                                name="wa_template"
+                                id="wa_template"
+                                class="form-control summernote"
+                            >{{ old('wa_template', $settings->wa_template ?? '') }}</textarea>
+
+                            <small class="text-muted">
+                                Gunakan placeholder: {name}, {brand}, {model}, {note}
+                            </small>
                         </div>
 
                         <!-- ADDRESS -->
@@ -109,3 +124,16 @@
 </div>
 
 @endsection
+@push('scripts')
+@if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+@endpush

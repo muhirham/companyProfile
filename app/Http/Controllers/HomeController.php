@@ -182,7 +182,7 @@ class HomeController extends Controller
             'genset_spec_id' => $spec->id,
         ]);
 
-        return back()->with('success', 'Inquiry submitted successfully!');
+        return back()->with('success', 'Penawaran Berhasil Di Kirim, Tim kami akan segera menghubungi Anda.');
     }
 
     public function getSpecsByBrand($brandId)

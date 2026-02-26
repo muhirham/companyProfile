@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->integer('map_zoom')->default(17);
             $table->text('map_embed_url')->nullable();
+            $table->text('wa_template')->nullable();
             $table->timestamps();
         });
     }
