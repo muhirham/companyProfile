@@ -175,13 +175,13 @@
                     $('#modalPhone').text(q.phone ?? '-');
                     $('#modalNote').text(q.note ?? '-');
 
-                    if (q.image) {
+                    if (q.image_url) {
                         $('#modalImage')
-                            .attr('src', '/storage/' + q.image)
+                            .attr('src', q.image_url)
                             .show();
-                        } else {
-                            $('#modalImage').hide();
-                        }
+                    } else {
+                        $('#modalImage').hide();
+                    }
 
                     const cleanPhone = (q.phone || '').replace(/[^0-9]/g, '');
 

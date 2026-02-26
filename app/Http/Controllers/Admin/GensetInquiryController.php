@@ -66,13 +66,11 @@ class GensetInquiryController extends Controller
 
             'brand' => optional($q->spec->brand)->name,
             'model' => optional($q->spec)->model,
-
             'engine' => optional($q->spec)->engine,
             'alternator' => optional($q->spec)->alternator,
 
-            'image_url' => $q->spec && $q->spec->image
-                ? asset('storage/' . $q->spec->image)
-                : null,
+            // 🔥 cukup panggil accessor
+            'image_url' => optional($q->spec)->image_url,
 
             'created_at' => optional($q->created_at)->format('d-m-Y H:i'),
         ];
