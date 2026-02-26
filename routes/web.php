@@ -9,8 +9,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\GensetInquiryController;
 use App\Http\Controllers\HomeController;
 
 
@@ -47,6 +47,12 @@ Route::get('/genset/{slug}', [HomeController::class, 'gensetDetail'])
 
 Route::get('/genset/{brandSlug}/{modelSlug}',[HomeController::class, 'detailModel'])
     ->name('user.genset.model.detail');
+
+Route::post('/genset-inquiry',[HomeController::class, 'store'])
+    ->name('genset.inquiry.store');
+
+Route::get('/genset-specs/{brand}',[HomeController::class, 'getSpecsByBrand'])
+    ->name('genset.specs.by.brand');
 
 
 
@@ -118,13 +124,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ->name('homepage.services');
 
     Route::put('/homepage/services',[HomepageController::class, 'updateServices'])
-    ->name('homepage.services.update');
+        ->name('homepage.services.update');
 
 
+
+    Route::get('/requests',[GensetInquiryController::class, 'index'])
+        ->name('requests.index');
+
+    Route::get('/requests/{inquiry}',[GensetInquiryController::class, 'show']);
+
+    Route::delete('/requests/{inquiry}',[GensetInquiryController::class, 'destroy']);
 
 
         
-        Route::resource('gallery', GalleryController::class)->except(['create', 'edit']);
+
         Route::resource('posts', PostController::class)->except(['create', 'edit']);
 
         Route::get('vision-mission', [VisionMissionController::class, 'edit'])->name('vision-mission.edit');

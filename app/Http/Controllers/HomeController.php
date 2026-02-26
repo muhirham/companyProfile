@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyProfile;
-use App\Models\VisionMission;
-use App\Models\Gallery;
-use App\Models\HomepageSetting;
-use App\Models\HomepageService;
-use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\ContactMessage;
+use App\Models\Gallery;
+use App\Models\GensetSpec;
+use App\Models\GensetInquiry;
+use App\Models\HomepageService;
+use App\Models\HomepageSetting;
+use App\Models\Post;
 use App\Models\Service;
-use App\Models\Brand;
+use App\Models\VisionMission;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 
 
@@ -130,11 +134,11 @@ class HomeController extends Controller
 
     public function detailModel($brandSlug, $modelSlug)
     {
-        $brand = \App\Models\Brand::where('slug', $brandSlug)
+        $brand = Brand::where('slug', $brandSlug)
             ->where('is_active', 1)
             ->firstOrFail();
 
-        $spec = \App\Models\GensetSpec::where('brand_id', $brand->id)
+        $spec = GensetSpec::where('brand_id', $brand->id)
             ->whereRaw('LOWER(model) = ?', [strtolower($modelSlug)])
             ->firstOrFail();
 
@@ -152,5 +156,40 @@ class HomeController extends Controller
 
         return $pdf->download($brand->name.'_catalog.pdf');
     }
+        // Penawaran genset
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:50',
+            'genset_spec_id' => 'required|exists:genset_specs,id',
+        ]);
+
+        // 🔥 AMBIL SPEC DULU
+        $spec = GensetSpec::findOrFail($request->genset_spec_id);
+
+        GensetInquiry::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'note' => $request->note,
+            'brand_id' => $spec->brand_id, // sekarang aman
+            'genset_spec_id' => $spec->id,
+        ]);
+
+        return back()->with('success', 'Inquiry submitted successfully!');
+    }
+
+    public function getSpecsByBrand($brandId)
+    {
+        $specs = GensetSpec::where('brand_id', $brandId)
+            ->get();
+
+        return response()->json($specs);
+    }
+
 
 }

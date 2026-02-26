@@ -314,9 +314,9 @@
             </a>
             </li>
 
-            <li class="{{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.gallery.index') }}">
-                <i class="fas fa-images"></i> <span>Gallery</span>
+            <li class="{{ request()->routeIs('admin.requests.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.requests.index') }}">
+                <i class="fas fa-images"></i> <span>Cust Required</span>
             </a>
             </li>
 
