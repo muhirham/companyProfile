@@ -3,6 +3,13 @@
 @section('content')
 <style>
 /* Fix mobile table homepage */
+#editHomepage .modal-dialog{
+    max-width:700px;
+}
+
+#editHomepage .modal-body{
+    min-height:350px;
+}
 @media (max-width: 768px) {
 
     .homepage-table table {
@@ -64,6 +71,7 @@
                                             <th class="text-nowrap">Hero Subtitle</th>
                                             <td class="text-break">{{ $homepage->hero_subtitle ?? '-' }}</td>
                                         </tr>
+                                        {{--
                                         <tr>
                                             <th class="text-nowrap">Years Experience</th>
                                             <td class="text-break">{{ $homepage->years_experience ?? '-' }}</td>
@@ -76,22 +84,7 @@
                                             <th class="text-nowrap">Support Service</th>
                                             <td class="text-break">{{ $homepage->support_service ?? '-' }}</td>
                                         </tr>
-                                    <tr>
-                                        <th>Hero Subtitle</th>
-                                        <td>{{ $homepage->hero_subtitle ?? '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Years Experience</th>
-                                        <td>{{ $homepage->years_experience ?? '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Projects Completed</th>
-                                        <td>{{ $homepage->projects_completed ?? '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Support Service</th>
-                                        <td>{{ $homepage->support_service ?? '-' }}</td>
-                                    </tr>
+                                        --}}
                                 </tbody>
                             </table>
                         </div>
@@ -103,7 +96,7 @@
                 </div>
             </div>
 
-            {{-- ================== SERVICES ================== --}}
+            {{-- ================== SERVICES ================== 
             <div class="card mb-4">
                 <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
                     <h4 class="mb-2 mb-md-0">Service Homepage</h4>
@@ -126,6 +119,7 @@
                     </div>
                 </div>
             </div>
+            --}}
 
             {{-- ================== HERO SLIDER ================== --}}
             @if (!empty($homepage->hero_images))
@@ -147,11 +141,9 @@
                                         Slide {{ $index + 1 }}
                                     </div>
 
-                                    <button class="btn btn-sm btn-danger mt-auto"
-                                            data-toggle="modal"
-                                            data-target="#deleteHeroModal"
-                                            data-id="{{ $slide['id'] }}"
-                                            data-image="{{ Storage::url($slide['image']) }}">
+                                    <button class="btn btn-sm btn-danger mt-auto delete-hero"
+                                        data-id="{{ $slide['id'] }}"
+                                        data-image="{{ Storage::url($slide['image']) }}">
                                         Hapus
                                     </button>
                                 </div>
@@ -166,120 +158,81 @@
     </div>
 </div>
 @endsection
+<form id="deleteHeroForm" method="POST" action="{{ route('admin.homepage.hero.delete') }}">
+    @csrf
+    @method('DELETE')
+    <input type="hidden" name="image_id" id="deleteHeroId">
+</form>
 
-
-{{-- ================== MODAL EDIT HOMEPAGE ================== --}}
-<div class="modal fade" id="editHomepage" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <form action="{{ route('admin.homepage.update') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Edit Homepage</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-
-                    <h6>Hero Section</h6>
-
-                    <div class="form-group">
-                        <label>Hero Title</label>
-                        <input type="text" name="hero_title" class="form-control"
-                               value="{{ $homepage->hero_title ?? '' }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Hero Subtitle</label>
-                        <textarea name="hero_subtitle" class="form-control"
-                                  rows="3">{{ $homepage->hero_subtitle ?? '' }}</textarea>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-group">
-                        <label>Hero Slider Images</label>
-                        <input type="file" name="hero_images[]" class="form-control" multiple>
-                    </div>
-
-                    <hr>
-
-                    <h6>Trust Counter</h6>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-4 col-12">
-                            <label>Years Experience</label>
-                            <input type="number" name="years_experience" class="form-control"
-                                   value="{{ $homepage->years_experience ?? 15 }}">
-                        </div>
-
-                        <div class="form-group col-md-4 col-12">
-                            <label>Projects Completed</label>
-                            <input type="number" name="projects_completed" class="form-control"
-                                   value="{{ $homepage->projects_completed ?? 500 }}">
-                        </div>
-
-                        <div class="form-group col-md-4 col-12">
-                            <label>Support Service</label>
-                            <input type="number" name="support_service" class="form-control"
-                                   value="{{ $homepage->support_service ?? 24 }}">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-success">Simpan</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-{{-- ================== MODAL DELETE HERO ================== --}}
-<div class="modal fade" id="deleteHeroModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <form action="{{ route('admin.homepage.hero.delete') }}" method="POST">
-            @csrf
-            @method('DELETE')
-
-            <input type="hidden" name="image_id" id="delete-image-id">
+    {{-- ================== MODAL EDIT HOMEPAGE ================== --}}
+    <div class="modal fade" id="editHomepage" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-danger">
-                        <i class="fas fa-trash"></i> Hapus Slide
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
-                <div class="modal-body text-center">
-                    <p>Yakin mau hapus gambar ini?</p>
-                    <img id="delete-image-preview"
-                         src=""
-                         class="img-fluid rounded border"
-                         style="max-height:180px">
-                </div>
+                <form action="{{ route('admin.homepage.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Batal
-                    </button>
-                    <button class="btn btn-danger">
-                        Ya, Hapus
-                    </button>
-                </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Homepage</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <h6 class="mb-3">Hero Section</h6>
+
+                        <div class="form-group">
+                            <label>Hero Title</label>
+                            <input type="text"
+                                name="hero_title"
+                                class="form-control"
+                                value="{{ $homepage->hero_title ?? '' }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hero Subtitle</label>
+                            <textarea name="hero_subtitle"
+                                    class="form-control"
+                                    rows="3">{{ $homepage->hero_subtitle ?? '' }}</textarea>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label>Hero Slider Images</label>
+                            <input type="file"
+                                name="hero_images[]"
+                                class="form-control"
+                                multiple>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Simpan
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal">
+                            Batal
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
-        </form>
+
+        </div>
     </div>
-</div>
 
 
-{{-- ================== MODAL EDIT SERVICES ================== --}}
+{{-- ================== MODAL EDIT SERVICES ================== 
 <div class="modal fade" id="editServices" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <form action="{{ route('admin.homepage.services.update') }}" method="POST">
@@ -341,9 +294,10 @@
         </form>
     </div>
 </div>
+--}}
 
 
-{{-- ================== SCRIPTS (TIDAK DIUBAH) ================== --}}
+
 @push('scripts')
 <script>
 setTimeout(() => {
@@ -392,4 +346,41 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+@endpush
+
+@push('scripts')
+<script>
+document.querySelectorAll('.delete-hero').forEach(btn => {
+
+    btn.addEventListener('click', function(){
+
+        let id = this.dataset.id
+        let image = this.dataset.image
+
+        Swal.fire({
+            title: 'Hapus Slide?',
+            text: "Gambar ini akan dihapus!",
+            imageUrl: image,
+            imageHeight: 150,
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById('deleteHeroId').value = id
+                document.getElementById('deleteHeroForm').submit()
+
+            }
+
+        })
+
+    })
+
+})
+</script>
+
 @endpush

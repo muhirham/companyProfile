@@ -73,55 +73,72 @@ body{
 /* =====================================================
    NAVIGATION
 ===================================================== */
-
 .nav-wrapper{
-    background:linear-gradient(#5aa1e3,#2f6fb1);
+    background:linear-gradient(135deg,#5aa1e3,#2f6fb1);
     border-radius:40px 40px 0 0;
     padding:0;
+    box-shadow:0 6px 18px rgba(0,0,0,.15);
+    backdrop-filter: blur(6px);
 }
 
-/* Hilangkan padding default bootstrap */
+/* hilangkan padding default */
 .navbar{
     padding:0;
 }
 
-/* Center menu dengan jarak rapi */
+/* jarak menu */
 .navbar-nav{
-    gap:30px;
+    gap:38px;
 }
 
-/* Style link normal */
+/* link style */
 .navbar-nav .nav-link{
     color:#fff;
-    font-size:15px;
-    padding:18px 10px;
+    font-size:17px;        /* sebelumnya 15px */
+    font-weight:600;
+    padding:20px 12px;
+    letter-spacing:.5px;
     position:relative;
-    transition:0.3s ease;
+    transition:all .25s ease;
 }
 
-/* Hover effect */
+/* hover */
 .navbar-nav .nav-link:hover{
-    color:#e6f0ff;
+    color:#eaf3ff;
+    transform:translateY(-1px);
 }
 
-/* ACTIVE STYLE — GANTI JADI UNDERLINE */
-.navbar-nav .nav-link.active{
-    background:none;
-}
-
-.navbar-nav .nav-link.active::after{
+/* underline animation */
+.navbar-nav .nav-link::after{
     content:"";
     position:absolute;
-    bottom:8px;
     left:50%;
-    transform:translateX(-50%);
-    width:40px;
+    bottom:8px;
+    width:0;
     height:3px;
     background:#fff;
-    border-radius:2px;
+    border-radius:3px;
+    transform:translateX(-50%);
+    transition:.25s ease;
 }
 
-/* ================= MOBILE STYLE ================= */
+/* hover underline */
+.navbar-nav .nav-link:hover::after{
+    width:35px;
+}
+
+/* active */
+.navbar-nav .nav-link.active::after{
+    width:35px;
+}
+
+/* toggler */
+.navbar-toggler{
+    font-size:24px;
+}
+
+/* ================= MOBILE ================= */
+
 @media(max-width:991px){
 
     .nav-wrapper{
@@ -132,17 +149,17 @@ body{
         background:#2f6fb1;
         margin-top:15px;
         border-radius:14px;
-        padding:15px 0;
-        box-shadow:0 8px 20px rgba(0,0,0,.2);
+        padding:10px 0;
+        box-shadow:0 8px 20px rgba(0,0,0,.25);
     }
 
     .navbar-nav{
-        gap:0 !important;
+        gap:0;
     }
 
     .navbar-nav .nav-link{
-        padding:14px;
-        border-radius:0;
+        padding:16px;
+        font-size:16px;
         border-bottom:1px solid rgba(255,255,255,.15);
     }
 
@@ -286,24 +303,61 @@ body{
 /* =====================================================
    HERO / SLIDER
 ===================================================== */
-
-.swiper-wrapper {
-  display: flex;
-  transform: translate3d(0px, 0, 0);
+/* HERO SECTION */
+.hero-section{
+    position:relative;
+    max-width:1140px; /* samakan dengan container navbar */
+    width:95%;
+    margin:30px auto;
 }
 
-.swiper-slide {
-  flex-shrink: 0;
-  width: 100%;
+/* SWIPER */
+.hero .swiper{
+    width:100%;
+    height:100%;
+}
+
+/* SLIDE */
+.hero .swiper-slide{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* NAV BUTTON */
+.hero-nav{
+    width:50px;
+    height:50px;
+    background:#eee;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* PANAH */
+.hero-nav::after{
+    font-size:22px;
+    color:#333;
+}
+
+/* PAGINATION */
+.hero-pagination{
+    position:absolute;
+    bottom:-30px;
+    width:100%;
+    text-align:center;
 }
 
 .hero{
-    height: 420px;
+     width:100%;
+    height:500px;
     margin-top:20px;
     border-radius:12px;
-    overflow:hidden;
+    overflow:visible;
     position:relative;
     background:#ddd;
+    position: relative;
 }
 .hero .swiper{
     height: 100%;
@@ -322,11 +376,66 @@ body{
     align-items:center;
     padding-left:50px;
     color:#fff;
-    z-index:10;
+    z-index:5;
+    pointer-events:none;
+}
+.hero-prev{
+    position:absolute;
+    left:-60px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.hero-next{
+    position:absolute;
+    right:-60px;
+    top:50%;
+    transform:translateY(-50%);
+}
+.swiper-wrapper {
+  display: flex;
+  transform: translate3d(0px, 0, 0);
+}
+
+.swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.hero-pagination{
+    position:absolute;
+    bottom:-35px;
+    left:0;
+    width:100%;
+    text-align:center;
 }
 .hero-overlay h1{
     font-size:34px;
     text-transform:uppercase;
+}
+@media(max-width:768px){
+
+    .hero{
+        height:300px;
+    }
+
+    .hero-overlay{
+        padding:20px;
+    }
+
+    .hero-overlay h1{
+        font-size:20px;
+    }
+
+    .hero-prev,
+    .hero-next{
+        display:none;
+    }
+
+    .hero-pagination{
+        bottom:-25px;
+    }
+
 }
 
 /* =====================================================
