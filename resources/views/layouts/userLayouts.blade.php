@@ -110,6 +110,9 @@
 
 
         <!-- ===== BRANDS ===== -->
+        @yield('footer')
+
+        @if (!View::hasSection('footer'))
         <div class="brands text-center mt-5">
             <div class="fw-bold mb-4">Powered by</div>
 
@@ -127,6 +130,7 @@
                 @endforeach
             </div>
         </div>
+        @endif
 
 
         <!-- ===== WHATSAPP FLOAT ===== -->

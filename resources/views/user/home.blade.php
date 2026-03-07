@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <!-- ===== SERVICES ===== -->
+    <!-- ===== SERVICES =====
     <div class="section">
         <div class="row g-4 justify-content-center">
 
@@ -54,7 +54,7 @@
     </div>
 
 
-    <!-- ===== VISI & MISI ===== -->
+    
     @if ($visionMission)
         <div class="section visi-misi">
             <div class="row">
@@ -77,7 +77,7 @@
         <p>Visi misi belum di buat</p>
     @endif
 
-    <!-- ===== TRUST ===== -->
+    
     <div class="trust-section" id="trust">
         <div class="row text-center">
             <div class="col-md-4 trust-box">
@@ -94,8 +94,9 @@
             </div>
         </div>
     </div>
+    -->
 
-    </div>
+</div>
 
 
     <!-- ===== SCRIPT ===== -->

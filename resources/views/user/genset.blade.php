@@ -1,4 +1,6 @@
 @extends('layouts.userLayouts')
+@section('footer')
+@endsection
 @section('content')
 
 <div class="page-section">
