@@ -289,18 +289,21 @@
                 <i class="fas fa-building"></i> <span>About Us</span>
             </a>
             </li>
-
+            
+            <!-- 
             <li class="{{ request()->routeIs('admin.values.*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.values.index') }}">
                 <i class="fas fa-gem"></i> <span>Nilai Perusahaan</span>
             </a>
             </li>
 
+            
             <li class="{{ request()->routeIs('admin.vision-mission.*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.vision-mission.edit') }}">
                     <i class="fas fa-bullseye"></i> <span>Visi & Misi</span>
                 </a>
             </li>
+            -->
 
             <li class="{{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.products.index') }}">
@@ -358,7 +361,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
+          Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">BernardBear</a>
         </div>
         <div class="footer-right">
           
