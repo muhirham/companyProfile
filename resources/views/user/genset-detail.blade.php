@@ -115,6 +115,35 @@
             background: #b02a37;
             color: #fff;
         }
+    /* ================= Breadcrumb ================= */
+
+    .breadcrumb-custom{
+        text-align:center;
+        font-size:20px;
+        margin:25px 0 35px;
+    }
+
+    .breadcrumb-custom span{
+        margin:0 6px;
+        color:#132aff;
+    }
+
+    /* item yang bukan halaman aktif */
+    .breadcrumb-item{
+        color:#555;
+        text-decoration:none;
+        font-weight:500;
+    }
+
+    .breadcrumb-item:hover{
+        color:#0d6efd;
+    }
+
+    /* halaman aktif */
+    .breadcrumb-active{
+        color:#0d6efd;
+        font-weight:600;
+    }
 
         /* ================= MOBILE TABLE FIX ================= */
 
@@ -175,9 +204,25 @@
     <div class="page-section">
 
         <!-- BREADCRUMB -->
-        <div class="breadcrumb-custom">
-            Genset / <strong>{{ $brand->name }}</strong> / Capacity
-        </div>
+            <div class="breadcrumb-custom">
+
+                <a href="{{ route('user.genset') }}" class="breadcrumb-item">
+                    Genset
+                </a>
+
+                <span>/</span>
+
+                <a href="{{ route('user.genset.detail', $brand->slug) }}" class="breadcrumb-item">
+                    {{ $brand->name }}
+                </a>
+
+                <span>/</span>
+
+                <span class="breadcrumb-active">
+                    Capacity
+                </span>
+
+            </div>
 
         <!-- TOP DETAIL -->
         <div class="genset-top d-flex justify-content-between align-items-start">

@@ -27,17 +27,60 @@
             font-weight: 600;
             width: 220px;
         }
+
+        /* ================= Breadcrumb ================= */
+
+        .breadcrumb-custom {
+            text-align: center;
+            font-size: 20px;
+            margin: 25px 0;
+        }
+
+        /* item biasa */
+        .breadcrumb-item {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* hover */
+        .breadcrumb-item:hover {
+            color: #0d6efd;
+        }
+
+        /* item aktif */
+        .breadcrumb-active {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+
+        /* separator */
+        .breadcrumb-custom span {
+            margin: 0 6px;
+            color: #062bff;
+        }
     </style>
 
     <div class="page-section detail-wrapper">
 
         <div class="breadcrumb-custom">
-            Genset /
-            <a href="{{ route('user.genset.detail', $brand->slug) }}">
+
+            <a href="{{ route('user.genset') }}" class="breadcrumb-item">
+                Genset
+            </a>
+
+            <span>/</span>
+
+            <a href="{{ route('user.genset.detail', $brand->slug) }}" class="breadcrumb-item">
                 {{ $brand->name }}
             </a>
-            /
-            <strong>{{ $spec->model }}</strong>
+
+            <span>/</span>
+
+            <span class="breadcrumb-active">
+                {{ $spec->model }}
+            </span>
+
         </div>
 
         <div class="detail-card">
@@ -108,10 +151,134 @@
                         </tr>
                     </table>
                     <hr>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#inquiryModal">
-                        Send Inquiry
+                    <button class="btn btn-danger mt-3" onclick="toggleInquiry()">
+                        Permintaan Penawaran
                     </button>
+                    {{-- 
+                    <form method="POST" action="{{ route('genset.inquiry.store') }}" id="inquiryForm"
+                        style="display:none;">
+                    --}}
+                    <form method="POST" action="{{ route('genset.inquiry.store') }}" id="inquiryForm">
+                        @csrf
+                        <input type="hidden" name="genset_spec_id" value="{{ $spec->id }}">
 
+                        <div class="mt-4">
+
+                            <div class="row">
+
+                                <div class="col-md-9">
+
+                                    <div class="mb-3">
+                                        <label>Nama</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>Alamat email</label>
+                                        <input type="email" name="email" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>No. Telp</label>
+                                        <input type="text" name="phone" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>Alamat</label>
+                                        <textarea name="address" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>Permintaan</label>
+                                        <textarea name="note" class="form-control"></textarea>
+                                    </div>
+
+                                </div>
+
+                                {{-- 
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <label>Brand</label>
+
+                                        <select id="brandSelect" class="form-control">
+
+                                            @foreach (App\Models\Brand::where('is_active', 1)->get() as $b)
+                                                <option value="{{ $b->id }}"
+                                                    {{ $b->id == $brand->id ? 'selected' : '' }}>
+                                                    {{ $b->name }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="mb-3">
+
+                                        <label>Model</label>
+
+                                        <select name="genset_spec_id" id="specSelect" class="form-control" required>
+
+                                            @foreach ($brand->specs as $s)
+                                                <option value="{{ $s->id }}"
+                                                    {{ $s->id == $spec->id ? 'selected' : '' }}>
+                                                    {{ $s->model }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <hr>
+
+
+                                    <div id="specPreview">
+
+                                        <div class="text-center mb-3">
+                                            <img id="previewImage" src="{{ $spec->image_url }}"
+                                                style="max-height:150px;object-fit:contain;">
+                                        </div>
+
+                                        <h6 id="previewModel">{{ $spec->model }}</h6>
+
+                                        <p><strong>Engine:</strong>
+                                            <span id="previewEngine">{{ $spec->engine }}</span>
+                                        </p>
+
+                                        <p><strong>Alternator:</strong>
+                                            <span id="previewAlternator">{{ $spec->alternator }}</span>
+                                        </p>
+
+                                        <p><strong>PRP (KVA):</strong>
+                                            <span id="previewPrpKva">{{ $spec->prp_kva }}</span>
+                                        </p>
+
+                                        <p><strong>ESP (KVA):</strong>
+                                            <span id="previewEspKva">{{ $spec->esp_kva }}</span>
+                                        </p>
+
+                                        <p><strong>Fuel:</strong>
+                                            <span id="previewFuel">{{ $spec->fuel }}</span> L/H
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                                --}}
+
+                            </div>
+
+                            <button type="submit" class="btn btn-dark mt-3">
+                                Kirim Permintaan
+                            </button>
+
+                        </div>
+
+                    </form>
                 </div>
 
             </div>
@@ -120,119 +287,7 @@
 
     </div>
 
-    <!-- INQUIRY MODAL -->
-    <div class="modal fade" id="inquiryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
 
-                <form method="POST" action="{{ route('genset.inquiry.store') }}">
-                    @csrf
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Genset Inquiry</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="row">
-
-                            <!-- LEFT SIDE -->
-                            <div class="col-md-6">
-
-                                <div class="mb-3">
-                                    <label>Name</label>
-                                    <input type="text" name="name" class="form-control" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Email</label>
-                                    <input type="email" name="email" class="form-control" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Phone</label>
-                                    <input type="text" name="phone" class="form-control" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Address</label>
-                                    <textarea name="address" class="form-control"></textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label>Notes</label>
-                                    <textarea name="note" class="form-control"></textarea>
-                                </div>
-
-                            </div>
-
-                            <!-- RIGHT SIDE -->
-                            <div class="col-md-6">
-
-                                <!-- BRAND -->
-                                <div class="mb-3">
-                                    <label>Brand</label>
-                                    <select id="brandSelect" class="form-control">
-                                        @foreach (App\Models\Brand::where('is_active', 1)->get() as $b)
-                                            <option value="{{ $b->id }}"
-                                                {{ $b->id == $brand->id ? 'selected' : '' }}>
-                                                {{ $b->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <!-- MODEL -->
-                                <div class="mb-3">
-                                    <label>Model</label>
-                                    <select name="genset_spec_id" id="specSelect" class="form-control" required>
-                                        @foreach ($brand->specs as $s)
-                                            <option value="{{ $s->id }}"
-                                                {{ $s->id == $spec->id ? 'selected' : '' }}>
-                                                {{ $s->model }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <hr>
-
-                                <div id="specPreview">
-
-                                    <div class="text-center mb-3">
-                                        <img id="previewImage" src="{{ $spec->image_url }}"
-                                            style="max-height:150px;object-fit:contain;">
-                                    </div>
-
-                                    <h6 id="previewModel">{{ $spec->model }}</h6>
-                                    <p><strong>Engine:</strong> <span id="previewEngine">{{ $spec->engine }}</span></p>
-                                    <p><strong>Alternator:</strong> <span
-                                            id="previewAlternator">{{ $spec->alternator }}</span></p>
-
-                                    <p><strong>PRP (KVA):</strong> <span id="previewPrpKva">{{ $spec->prp_kva }}</span></p>
-                                    <p><strong>ESP (KVA):</strong> <span id="previewEspKva">{{ $spec->esp_kva }}</span></p>
-
-                                    <p><strong>Fuel:</strong> <span id="previewFuel">{{ $spec->fuel }}</span> L/H</p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
-                            Submit Inquiry
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
     <script>
         let allSpecs = [];
 
@@ -303,8 +358,9 @@
                 document.getElementById('previewImage').src = '/storage/' + spec.image;
             }
         }
+
     </script>
-    @if(session('success'))
+    @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
 
@@ -323,5 +379,5 @@
                 });
             });
         </script>
-@endif
+    @endif
 @endsection
