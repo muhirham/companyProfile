@@ -235,6 +235,30 @@
                             </a>
                         </li>
 
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">
+                                    Login
+                                </a>
+                            </li>
+                            @endguest
+
+                            @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.index') }}">
+                                    Admin
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="nav-link border-0 bg-transparent">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                            @endauth
 
                     </ul>
                 </div>
