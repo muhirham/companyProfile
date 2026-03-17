@@ -49,6 +49,7 @@
 </div>
 @endsection
 
+@push('modals')
 {{-- MODAL EDIT --}}
 <div class="modal fade" id="editModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -103,6 +104,8 @@
         </form>
     </div>
 </div>
+@endpush
+
 
 
 @push('scripts')

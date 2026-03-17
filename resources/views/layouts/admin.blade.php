@@ -283,7 +283,7 @@
   <script src="{{asset('admin/dist/assets/js/scripts.js')}}"></script>
   <script src="{{asset('admin/dist/assets/js/custom.js')}}"></script>
   
-
+  @stack('modals')
   @stack('scripts')
 </body>
 </html>

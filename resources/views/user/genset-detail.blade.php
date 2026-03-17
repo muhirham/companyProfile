@@ -145,6 +145,7 @@
         font-weight:600;
     }
 
+
         /* ================= MOBILE TABLE FIX ================= */
 
         @media (max-width:768px) {
@@ -197,6 +198,31 @@
             .pdf-download-btn {
                 font-size: 12px;
                 padding: 6px 10px;
+            }
+            .powered-wrap{
+                width:100%;
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .powered-logo{
+                width:100%;
+                max-width:180px;
+            }
+
+            .powered-logo img{
+                width:100%;
+                max-width:100%;
+                height:auto;
+                object-fit:contain;
+                display:block;
+            }
+
+            .preview-box{
+                width:100%;
+                height:auto;
+                padding:15px;
             }
         }
     </style>

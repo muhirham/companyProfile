@@ -70,6 +70,7 @@
     </div>
 @endsection
 
+@push('modals')
 <div class="modal fade" id="messageModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -119,6 +120,7 @@
         </div>
     </div>
 </div>
+@endpush
 
 @push('scripts')
     <script>
