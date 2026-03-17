@@ -128,6 +128,12 @@
                         {{ auth()->user()->email }}
                     </div>
 
+                    <a href="{{ route('admin.settings.user_admin') }}"
+                      class="dropdown-item has-icon">
+                        <i class="fas fa-user-cog"></i>
+                        Account Settings
+                    </a>
+
                     <div class="dropdown-divider"></div>
 
                     <form action="{{ route('logout') }}" method="POST">

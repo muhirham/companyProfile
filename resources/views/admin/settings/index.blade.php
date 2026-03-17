@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="section-body">
 
     <div class="section-header mb-4">
         <h1 class="h3">Website Settings</h1>

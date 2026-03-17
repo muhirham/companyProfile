@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\CompanyValueController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -137,7 +138,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/homepage/services',[HomepageController::class, 'updateServices'])
         ->name('homepage.services.update');
 
+    Route::get('/user-admin', [AdminSettingController::class, 'index'])
+        ->name('settings.user_admin');
 
+    Route::put('/user-admin/update', [AdminSettingController::class, 'update'])
+        ->name('settings.user_admin.update');
 
     Route::get('/requests',[GensetInquiryController::class, 'index'])
         ->name('requests.index');
