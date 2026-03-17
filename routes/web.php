@@ -118,6 +118,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/genset/spec/{id}', [ProductController::class, 'updateSpec'])
         ->name('genset.updateSpec');
 
+    Route::put('/genset/spec-detail/{id}', [ProductController::class, 'updateSpecDetail'])
+        ->name('genset.updateSpecDetail');
+
     Route::delete('/genset/spec/{id}', [ProductController::class, 'deleteSpec'])
         ->name('genset.deleteSpec');
 

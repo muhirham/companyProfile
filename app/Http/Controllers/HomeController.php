@@ -140,7 +140,8 @@ class HomeController extends Controller
             ->where('is_active', 1)
             ->firstOrFail();
 
-        $spec = GensetSpec::where('brand_id', $brand->id)
+        $spec = GensetSpec::with('modelDetail')
+            ->where('brand_id', $brand->id)
             ->whereRaw('LOWER(model) = ?', [strtolower($modelSlug)])
             ->firstOrFail();
 

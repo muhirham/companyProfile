@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\GensetSeeder::class,
             \Database\Seeders\QuoteRequestSeeder::class,
             \Database\Seeders\WebsiteSettingSeeder::class,
+            \Database\Seeders\UserSeeder::class,
+            
             
         ]);
     }

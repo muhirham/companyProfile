@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Brand;
 use App\Models\GensetSpec;
+use App\Models\GensetSpecModelDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -207,5 +208,26 @@ class ProductController extends Controller
 
         return redirect()->route('admin.genset.index')
             ->with('success','Brand deleted!');
+    }
+    public function updateSpecDetail(Request $request, $id)
+    {
+        $spec = GensetSpec::findOrFail($id);
+
+        GensetSpecModelDetail::updateOrCreate(
+            [
+                'genset_spec_id' => $spec->id
+            ],
+            [
+                'tipe_mesin' => $request->tipe_mesin,
+                'nomor_silinder' => $request->nomor_silinder,
+                'ukuran_silinder' => $request->ukuran_silinder,
+                'bore_stroke' => $request->bore_stroke,
+                'displacement' => $request->displacement,
+                'kapasitas_minyak' => $request->kapasitas_minyak,
+                'generator' => $request->generator,
+            ]
+        );
+
+        return back()->with('success','Model detail updated!');
     }
 }

@@ -37,6 +37,11 @@ class GensetSpec extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function modelDetail()
+    {
+        return $this->hasOne(GensetSpecModelDetail::class);
+    }
+
     public function getImageUrlAttribute()
     {
         if ($this->image && file_exists(public_path('storage/'.$this->image))) {

@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\GensetSpec;
+use App\Models\GensetSpecModelDetail;
 
 class GensetSeeder extends Seeder
 {
@@ -52,7 +53,7 @@ class GensetSeeder extends Seeder
                 $hSilent = $hOpen + 150;
                 $kgSilent = $kgOpen + 250;
 
-                GensetSpec::create([
+                $spec = GensetSpec::create([
                     'brand_id' => $brand->id,
                     'model' => 'APP-' . str_pad($i, 2, '0', STR_PAD_LEFT),
                     'engine' => 'Engine-' . rand(1000, 9999),
@@ -76,6 +77,18 @@ class GensetSeeder extends Seeder
                     'kg_silent' => $kgSilent,
 
                     'image' => null
+                ]);
+
+                GensetSpecModelDetail::create([
+                    'genset_spec_id' => $spec->id,
+
+                    'tipe_mesin' => $brandName,
+                    'nomor_silinder' => rand(3, 8),
+                    'ukuran_silinder' => rand(90, 130) . ' mm',
+                    'bore_stroke' => rand(90, 130) . ' x ' . rand(100, 150) . ' mm',
+                    'displacement' => rand(3000, 8000) . ' cc',
+                    'kapasitas_minyak' => rand(10, 30) . ' ltr',
+                    'generator' => 'GEN-' . rand(100, 999),
                 ]);
             }
         }

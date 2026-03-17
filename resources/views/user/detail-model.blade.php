@@ -20,12 +20,23 @@
         }
 
         .spec-table td {
-            padding: 8px 12px;
+            padding: 10px 12px;
+            vertical-align: middle;
         }
 
         .spec-table td:first-child {
             font-weight: 600;
-            width: 220px;
+            width: 230px;
+            white-space: nowrap;
+        }
+
+        .spec-table td:nth-child(2) {
+            width: 20px;
+            text-align: center;
+        }
+
+        .spec-table td:last-child {
+            padding-left: 18px;
         }
 
         /* ================= Breadcrumb ================= */
@@ -99,61 +110,55 @@
 
                     <hr>
 
-                    <h5>Output</h5>
+                    <h5>Engine Data</h5>
+                    <hr>
                     <table class="table spec-table">
                         <tr>
-                            <td>PRP (KVA)</td>
-                            <td>{{ $spec->prp_kva }}</td>
+                            <td>Tipe Mesin</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->tipe_mesin }}</td>
                         </tr>
                         <tr>
-                            <td>ESP (KVA)</td>
-                            <td>{{ $spec->esp_kva }}</td>
+                            <td>Nomor Silinder</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->nomor_silinder }}</td>
                         </tr>
                         <tr>
-                            <td>PRP (KW)</td>
-                            <td>{{ $spec->prp_kw }}</td>
+                            <td>Ukuran Silinder</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->ukuran_silinder }}</td>
                         </tr>
                         <tr>
-                            <td>ESP (KW)</td>
-                            <td>{{ $spec->esp_kw }}</td>
+                            <td>Bore x Stroke</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->bore_stroke }}</td>
                         </tr>
                         <tr>
-                            <td>Fuel (L/H)</td>
+                            <td>Displacement</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->displacement }}</td>
+                        </tr>
+                        <tr>
+                            <td>Konsumsi Bahan Bakar</td>
+                            <td>:</td>
                             <td>{{ $spec->fuel }}</td>
                         </tr>
-                    </table>
-
-                    <hr>
-
-                    <h5>Open Type</h5>
-                    <table class="table spec-table">
                         <tr>
-                            <td>Dimension (L x W x H)</td>
-                            <td>{{ $spec->l_open }} x {{ $spec->w_open }} x {{ $spec->h_open }} mm</td>
+                            <td>Kapasitas Minyak</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->kapasitas_minyak }}</td>
                         </tr>
                         <tr>
-                            <td>Weight</td>
-                            <td>{{ $spec->kg_open }} kg</td>
+                            <td>Generator</td>
+                            <td>:</td>
+                            <td>{{ optional($spec->modelDetail)->generator }}</td>
                         </tr>
                     </table>
 
-                    <hr>
-
-                    <h5>Silent Type</h5>
-                    <table class="table spec-table">
-                        <tr>
-                            <td>Dimension (L x W x H)</td>
-                            <td>{{ $spec->l_silent }} x {{ $spec->w_silent }} x {{ $spec->h_silent }} mm</td>
-                        </tr>
-                        <tr>
-                            <td>Weight</td>
-                            <td>{{ $spec->kg_silent }} kg</td>
-                        </tr>
-                    </table>
-                    <hr>
-                    <button class="btn btn-danger mt-3" onclick="toggleInquiry()">
+                    <h5 class="mt-4 mb-3">
                         Permintaan Penawaran
-                    </button>
+                    </h5>
+                    <hr>
                     {{-- 
                     <form method="POST" action="{{ route('genset.inquiry.store') }}" id="inquiryForm"
                         style="display:none;">
