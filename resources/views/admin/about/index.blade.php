@@ -125,5 +125,51 @@ ClassicEditor
 $('form').on('submit', function () {
     $('textarea[name="description"]').val(editor.getData());
 });
+
+$('.toggle-password').click(function () {
+    let target = $(this).data('target');
+    let input = $('#' + target);
+    let icon = $(this).find('i');
+
+    if (input.attr('type') === 'password') {
+        input.attr('type', 'text');
+        icon.removeClass('fa-eye').addClass('fa-eye-slash');
+    } else {
+        input.attr('type', 'password');
+        icon.removeClass('fa-eye-slash').addClass('fa-eye');
+    }
+});
 </script>
+
+@if(session('success'))
+<script>
+Swal.fire({
+    icon: 'success',
+    title: 'Berhasil',
+    text: '{{ session('success') }}',
+    timer: 1800,
+    showConfirmButton: false
+});
+</script>
+@endif
+
+@if(session('error'))
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Gagal',
+    text: '{{ session('error') }}'
+});
+</script>
+@endif
+
+@if($errors->any())
+<script>
+Swal.fire({
+    icon: 'error',
+    title: 'Validasi Gagal',
+    html: `{!! implode('<br>', $errors->all()) !!}`
+});
+</script>
+@endif
 @endpush

@@ -360,7 +360,11 @@
                 contentType: false,
                 success: function(res) {
                     if (!res) {
-                        alert('Gagal menyimpan data.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Data tidak valid.'
+                        });
                         return;
                     }
 
@@ -375,41 +379,81 @@
 
                     document.activeElement.blur();
                     $('#postModal').modal('hide');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: id ? 'Berita berhasil diperbarui' : 'Berita berhasil ditambahkan',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
                 },
                 error: function(xhr) {
-                    let msg = 'Gagal menyimpan data.\n';
+                    let msg = 'Gagal menyimpan data';
+
                     if (xhr.responseJSON && xhr.responseJSON.errors) {
-                        const errors = xhr.responseJSON.errors;
-                        msg += Object.values(errors).map(function(item) {
-                            return item.join(' ');
-                        }).join('\n');
+                        msg = Object.values(xhr.responseJSON.errors)
+                            .map(item => item.join(' '))
+                            .join('<br>');
                     }
-                    alert(msg);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validasi Gagal',
+                        html: msg
+                    });
                 }
             });
         });
 
         // DELETE
         $(document).on('click', '.btn-delete-post', function() {
-            if (!confirm('Yakin hapus berita ini?')) return;
-
             const id = $(this).data('id');
 
-            $.ajax({
-                url: "{{ url('admin/posts') }}/" + id,
-                type: 'POST',
-                data: {
-                    _method: 'DELETE',
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function() {
-                    $('#row-' + id).fadeOut(200, function() {
-                        $(this).remove();
+            Swal.fire({
+                title: 'Hapus berita?',
+                text: 'Data yang dihapus tidak bisa dikembalikan.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "{{ url('admin/posts') }}/" + id,
+                        type: 'POST',
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function() {
+                            $('#row-' + id).fadeOut(200, function() {
+                                $(this).remove();
+                            });
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Terhapus',
+                                text: 'Berita berhasil dihapus',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Gagal menghapus data'
+                            });
+                        }
                     });
-                },
-                error: function() {
-                    alert('Gagal menghapus data.');
+
                 }
+
             });
         });
 
